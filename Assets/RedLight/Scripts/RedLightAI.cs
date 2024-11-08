@@ -4,77 +4,72 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
-
-public class RedLightAI : MonoBehaviour
+namespace RedLightMiniGameSpace
 {
-    public enum State {die, alive, win}
-    public State currentState;
-    public SpriteRenderer spriteRenderer;
-    public RedLightBoss redLightBoss;
-    public Transform finishPoint;
-    public float speed;
-
-    private void Update()
+    public class RedLightAI : Player
     {
-        if(currentState==State.alive)
-            Movement();
-        if((finishPoint.position.y-transform.position.y)<0)
-            Win();
-        if (redLightBoss.lightColor == RedLightBoss.LightColor.red && !(currentState==State.die))
+        private void Update()
         {
-            if (new Vector2(AIJoyStick().x, AIJoyStick().y).magnitude > 0)
+            if (currentState == State.alive)
+                Movement();
+            if ((finishPoint.position.y - transform.position.y) < 0)
+                Win();
+            if (redLightBoss.lightColor == RedLightBoss.LightColor.red && !(currentState == State.die))
             {
-                Die();
+                if (new Vector2(AIJoyStick().x, AIJoyStick().y).magnitude > 0)
+                {
+                    Die();
+                }
             }
         }
-    }
 
-    public void Die()
-    {
-        currentState = State.die; 
-        spriteRenderer.color = Color.red; 
-    }
-    public void Win()
-    {
-        currentState=State.win;
-        spriteRenderer.color = Color.blue;
-    }
-    public Vector2 AIJoyStick()
-    {
-        if (redLightBoss.lightColor == RedLightBoss.LightColor.red)
+        public void Die()
         {
-            return Vector2.zero;
+            currentState = State.die;
+            spriteRenderer.color = Color.red;
         }
-        else
+        public void Win()
         {
-            
-            float horizontalMovement = Mathf.PerlinNoise(Time.time, 0) * 2 - 1; 
-            float verticalMovement = 1; 
-
-            return new Vector2(horizontalMovement, verticalMovement);
+            currentState = State.win;
+            spriteRenderer.color = Color.blue;
         }
-    }
-    public void Movement()
-    {
-        if (currentState==State.die) return; 
-        Vector2 move = new Vector2(AIJoyStick().x, AIJoyStick().y) * speed * Time.deltaTime;
-        transform.Translate(move);
+        public Vector2 AIJoyStick()
+        {
+            if (redLightBoss.lightColor == RedLightBoss.LightColor.red)
+            {
+                return Vector2.zero;
+            }
+            else
+            {
 
-      
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+                float horizontalMovement = Mathf.PerlinNoise(Time.time, 0) * 2 - 1;
+                float verticalMovement = 1;
 
-        
-        screenPosition.x = Mathf.Clamp(screenPosition.x, 0, Screen.width);
-        screenPosition.y = Mathf.Clamp(screenPosition.y, 0, Screen.height);
+                return new Vector2(horizontalMovement, verticalMovement);
+            }
+        }
+        public void Movement()
+        {
+            if (currentState == State.die) return;
+            Vector2 move = new Vector2(AIJoyStick().x, AIJoyStick().y) * speed * Time.deltaTime;
+            transform.Translate(move);
 
-        
-        transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
-    }
 
-   
-    public void ResetPlayer()
-    {
-        currentState = State.alive;
-        spriteRenderer.color = Color.white; 
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+
+
+            screenPosition.x = Mathf.Clamp(screenPosition.x, 0, Screen.width);
+            screenPosition.y = Mathf.Clamp(screenPosition.y, 0, Screen.height);
+
+
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
+
+
+        public void ResetPlayer()
+        {
+            currentState = State.alive;
+            spriteRenderer.color = Color.white;
+        }
     }
 }
