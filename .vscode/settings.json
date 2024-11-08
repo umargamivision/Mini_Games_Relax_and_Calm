@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Mini_Games.sln"
+    "dotnet.defaultSolution": "Mini_Games_Relax_and_Calm.sln"
 }
