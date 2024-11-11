@@ -57,6 +57,6 @@ public class HamsterJumpMiniGame : MiniGameBase
 
     public override void ReplayLevel()
     {
-        UIManager.Instance.LoadMiniGameScene("hamster");
+        UIManager.Instance.LoadMiniGameScene("Hamster Jump");
     }
 }

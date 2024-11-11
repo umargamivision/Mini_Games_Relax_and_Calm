@@ -18,6 +18,9 @@ public class RedLightBoss : MonoBehaviour
     public List<GameObject> yellowLightObjects;
     public List<GameObject> greenLightObjects;
     int timer;
+    private void Start() {
+        
+    }
     public void GameStart()
     {
         StartCoroutine(RedLightTimer());

@@ -61,6 +61,4 @@ public class RedLightMiniGame : MiniGameBase
         }
         onTimerEnd?.Invoke();
     }
-
-
 }

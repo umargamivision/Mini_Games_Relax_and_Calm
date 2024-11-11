@@ -5,11 +5,12 @@ namespace RedLightMiniGameSpace
 {
     public class RedLightPlayer : Player
     {
+        public Rigidbody2D rigidbody2D;
         public Joystick joystick;
         private void Update()
         {
             if (currentState == State.alive)
-                Movement();
+                RBMovement();
             if ((finishPoint.position.y - transform.position.y) < 0 && currentState == State.alive)
                 Win();
             // Check if the light is red and the player is moving, only if they are not already dead
@@ -38,6 +39,27 @@ namespace RedLightMiniGameSpace
         {
             yield return new WaitForSeconds(dely);
             _action.Invoke();
+        }
+        public void RBMovement()
+        {
+            if (currentState == State.die) return; // Prevent movement if the player is dead
+
+            // Move the player based on joystick input
+            Vector2 move = new Vector2(joystick.Horizontal, joystick.Vertical) * speed * Time.deltaTime;
+            rigidbody2D.velocity = move;
+
+            // Get the player's current position in screen space
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+
+            // Clamp the player's screen position to keep it within the screen bounds
+            screenPosition.x = Mathf.Clamp(screenPosition.x, 0, Screen.width);
+            screenPosition.y = Mathf.Clamp(screenPosition.y, 0, Screen.height);
+
+            // Convert back to world space
+            Vector3 clampedWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+
+            // Set the Rigidbody2D position, clamping only the position
+            rigidbody2D.position = new Vector2(clampedWorldPosition.x, clampedWorldPosition.y);
         }
         public void Movement()
         {
@@ -73,5 +95,14 @@ namespace RedLightMiniGameSpace
         public SpriteRenderer spriteRenderer;
         public RedLightBoss redLightBoss;
         public Transform finishPoint;
+        public void ApplyTrap()
+        {
+
+        }
+        public void KillPlayer()
+        {
+            print("Player Die");
+            Destroy(gameObject);
+        }
     }
 }
