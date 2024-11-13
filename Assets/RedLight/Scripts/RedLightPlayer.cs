@@ -1,12 +1,24 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 namespace RedLightMiniGameSpace
 {
     public class RedLightPlayer : Player
     {
         public Rigidbody2D rigidbody2D;
         public Joystick joystick;
+        public GameObject[] characters;
+        private void Start() 
+        {
+            SetCharacter();
+        }
+        public void SetCharacter(int index=0)
+        {
+            characters.ToList().ForEach(f=>f.SetActive(false));
+            characters[index].SetActive(true);
+        }
         private void Update()
         {
             if (currentState == State.alive)

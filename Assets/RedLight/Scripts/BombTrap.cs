@@ -1,17 +1,20 @@
 using System.Collections;
 using UnityEngine;
-
+using DG.Tweening;
 namespace RedLightMiniGameSpace
 {
     public class BombTrap : RedLightTrap
     {
         public float explosionRadius = 5.0f;
         public float explosionDelay = 3.0f;
+        public float dropSpeed;
+        public float dely;
+        public Transform dropPoint;
         public GameObject explosionEffect;
 
         private void Start() 
         {
-            TriggerTrap(null);     
+            transform.DOMove(dropPoint.position,dropSpeed).OnComplete(()=>TriggerTrap(null)).SetEase(Ease.OutSine).SetDelay(dely);     
         }
         public override void TriggerTrap(Player player)
         {
