@@ -1,43 +1,107 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 namespace DoReMiSpace
 {
     public class PlayerController : MonoBehaviour
     {
-        public int currentLevel;
+        public bool voiceControll;
+        public MicroInput microInput;
+        public float[] loudnessOfLevels;
+        public bool hasReached;
+        public int currentHightLevel;
         public float[] hightLevels;
         public string obstacleName;
         public float collisionForce;
         public float jumpForce;
         public float moveSpeed;
-        public float maxHight;
         public float maxSpeed;
-        public Vector3 gravity = new Vector3(0,-9.8f,0);
+        public float gravity;
         public Rigidbody rb;
-        bool jump;
+        public UnityEvent onReachFinishPoint;
         public void Update()
         {
-            Physics.gravity = gravity;
-            jump = Input.GetMouseButtonDown(0);
-            if(jump)
+            if (voiceControll)
+                VoiceController();
+            else
+                TapController();
+        }
+        public void VoiceController()
+        {
+            for (int i = 0; i < loudnessOfLevels.Length; i++)
             {
-                rb.AddForce(Vector3.up*jumpForce , ForceMode.Impulse);
+                if(microInput.loudness>loudnessOfLevels[i]) 
+                {
+                    currentHightLevel = i;
+                }
+            }
+            if(microInput.loudness > loudnessOfLevels[0]) SetHight();
+            else AddGravity();
+        }
+        public void TapController()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                UpdateCurrentLevel();
+            }
+            if (Input.GetMouseButton(0))
+                SetHight();
+            else
+                AddGravity();
+        }
+        public void UpdateCurrentLevel()
+        {
+            currentHightLevel++;
+            if (currentHightLevel >= hightLevels.Length)
+            {
+                currentHightLevel = hightLevels.Length - 1;
             }
         }
-        private void FixedUpdate() 
+        private void FixedUpdate()
         {
-            if(rb.velocity.magnitude<maxSpeed)
-            rb.AddForce(Vector3.forward*moveSpeed);
-
-            //rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxHight , maxHight), rb.velocity.z);
+            if (rb.velocity.z < maxSpeed && !hasReached)
+                rb.AddForce(Vector3.forward * moveSpeed);
         }
-        private void OnCollisionEnter(Collision other) 
+        public void SetHight()
         {
-            if(other.gameObject.name.Contains(obstacleName))
+            if (hasReached) return;
+            rb.velocity = new Vector3(0, 0, rb.velocity.z);
+            var HightPoint = new Vector3(rb.position.x, hightLevels[currentHightLevel], rb.position.z);
+            rb.position = Vector3.Lerp(rb.position, HightPoint, jumpForce * Time.deltaTime);
+        }
+        public void AddGravity()
+        {
+            if (hasReached) return;
+            rb.velocity = new Vector3(0, gravity, rb.velocity.z);
+            rb.position = new Vector3(rb.position.x, Mathf.Clamp(rb.position.y, -10, 100), rb.position.z);
+
+            for (int i = 0; i < hightLevels.Length; i++)
             {
-                rb.AddForce(-transform.forward*collisionForce , ForceMode.Impulse);
+                if (rb.position.y <= hightLevels[i])
+                {
+                    currentHightLevel = i;
+                    break;
+                }
+            }
+
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.name.Contains(obstacleName))
+            {
+                rb.AddForce(-transform.forward * collisionForce, ForceMode.Impulse);
+                //rb.AddForce(-transform.forward * collisionForce, ForceMode.VelocityChange);
+            }
+            if (other.transform.CompareTag("Finish"))
+            {
+                hasReached = true;
+                rb.useGravity = true;
+                rb.drag = 0.5f;
+                onReachFinishPoint.Invoke();
             }
         }
     }

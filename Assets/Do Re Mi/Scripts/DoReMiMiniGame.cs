@@ -6,11 +6,11 @@ public class DoReMiMiniGame : MiniGameBase
 {
     public enum Mode {Tap, Voice}
     public Mode mode;
+
     public override void NextLevel()
     {
         throw new System.NotImplementedException();
     }
-
     public override void ReplayLevel()
     {
         throw new System.NotImplementedException();

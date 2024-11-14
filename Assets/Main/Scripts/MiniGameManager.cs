@@ -3,6 +3,9 @@ using UnityEngine;
 
 public abstract class MiniGameBase : MonoBehaviour
 {
+    private void Start() {
+        Application.targetFrameRate = 30;
+    }
     public virtual void MiniGameStart()
     {
         Debug.Log("GAME START");
