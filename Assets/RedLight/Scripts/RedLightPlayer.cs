@@ -18,6 +18,7 @@ namespace RedLightMiniGameSpace
         {
             characters.ToList().ForEach(f=>f.SetActive(false));
             characters[index].SetActive(true);
+            spriteRenderer = characters[index].GetComponent<SpriteRenderer>();
         }
         private void Update()
         {
@@ -38,6 +39,8 @@ namespace RedLightMiniGameSpace
         {
             if (currentState == State.alive)
                 RBMovement();    
+            else
+                rb2D.velocity=Vector3.zero;
         }
         public void Die()
         {

@@ -9,8 +9,13 @@ public class MicroInput : MonoBehaviour
     {
         sensitivity = value;
     }
+    public void SmoothnessChange(Single value)
+    {
+        loudnessSmoothness = value;
+    }
     public bool stopMic;
     public float sensitivity = 100f;
+    public Single loudnessSmoothness = 0.1f;
     public float loudness = 0f;
 
     private AudioClip microphoneClip;
@@ -42,9 +47,12 @@ public class MicroInput : MonoBehaviour
 
     void Update()
     {
-        if(!stopMic)
-        loudness = GetMicrophoneLoudness() * sensitivity;
-        Debug.Log("Loudness: " + loudness);
+        if (!stopMic)
+        {
+            loudness = Mathf.Lerp(loudness, GetMicrophoneLoudness(), loudnessSmoothness*Time.deltaTime);
+            //loudness = GetMicrophoneLoudness() * sensitivity;
+            Debug.Log("Loudness: " + loudness);
+        }
         // if (canJump && isGrounded && (loudness > jumpLoudnessThreshold || Input.GetKeyDown(KeyCode.Space)))
         // {
         //     rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
