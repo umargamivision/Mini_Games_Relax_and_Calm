@@ -16,8 +16,9 @@ public class MicroInput : MonoBehaviour
     private AudioClip microphoneClip;
     private int sampleWindow = 128;
 
-    public void Start()
+    public void SetupMic()
     {
+        //if(stopMic) return;
         if (Microphone.devices.Length > 0)
         {
             microphoneClip = Microphone.Start(Microphone.devices[0], true, 10, 44100);

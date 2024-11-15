@@ -7,7 +7,7 @@ namespace RedLightMiniGameSpace
 {
     public class BananaPeelTrap : RedLightTrap
     {
-        private float trapTime;
+        public float trapTime;
 
         public override void TriggerTrap(Player _player)
         {
@@ -18,8 +18,10 @@ namespace RedLightMiniGameSpace
         {
             var tempSpeed = player.speed;
             player.speed = 0;
+            player.rb2D.isKinematic=true;
             player.transform.DOMove(transform.position,0.5f);
             yield return new WaitForSeconds(trapTime);
+            player.rb2D.isKinematic=false;
             player.speed = tempSpeed;
         }
         private void OnTriggerEnter2D(Collider2D other) 

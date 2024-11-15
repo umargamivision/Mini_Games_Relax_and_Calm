@@ -12,11 +12,25 @@ public class HamsterJumpMiniGame : MiniGameBase
     [Header("UI")]
     public TMP_Text hightScoreTxt;
     public TMP_Text scoreTxt;
+    public GameObject arrow1, arrow2;
     public UnityEvent onPlay;
     int score;
-    private void Start() 
+    public void Start()
     {
         StartGame();
+        StartCoroutine(Tutorial());
+    }
+    public IEnumerator Tutorial()
+    {
+        while (true)
+        {
+            arrow1.SetActive(true);
+            arrow2.SetActive(false);
+            yield return new WaitForSeconds(1);
+            arrow1.SetActive(false);
+            arrow2.SetActive(true);
+            yield return new WaitForSeconds(1);
+        }
     }
     public void StartGame()
     {
@@ -30,12 +44,12 @@ public class HamsterJumpMiniGame : MiniGameBase
     }
     public void AddScore(int _score)
     {
-        score+=_score;
-        if(GamePreference.HamsterJumpHighScore<score)
+        score += _score;
+        if (GamePreference.HamsterJumpHighScore < score)
         {
-            GamePreference.HamsterJumpHighScore=score;
+            GamePreference.HamsterJumpHighScore = score;
         }
-        scoreTxt.text=score.ToString();
+        scoreTxt.text = score.ToString();
     }
     public void ShowFailResult()
     {

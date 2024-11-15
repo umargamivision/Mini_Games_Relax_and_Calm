@@ -23,8 +23,10 @@ namespace DoReMiSpace
         public float gravity;
         public Rigidbody rb;
         public UnityEvent onReachFinishPoint;
+        public UnityEvent onComplete;
         public void StartGame(bool useVoiceControl)
         {
+            if(useVoiceControl)microInput.SetupMic();
             voiceControll = useVoiceControl;
             stoped = false;
         }
@@ -101,13 +103,23 @@ namespace DoReMiSpace
                 rb.AddForce(-transform.forward * collisionForce, ForceMode.Impulse);
                 //rb.AddForce(-transform.forward * collisionForce, ForceMode.VelocityChange);
             }
-            if (other.transform.CompareTag("Finish"))
+            if (other.transform.name==("End Point"))
             {
                 hasReached = true;
                 rb.useGravity = true;
                 rb.drag = 0.5f;
                 onReachFinishPoint.Invoke();
             }
+            if(other.transform.CompareTag("Finish"))
+            {
+                if(completeDely==null)completeDely=StartCoroutine(GameCompleteDely());
+            }
+        }
+        public Coroutine completeDely;
+        public IEnumerator GameCompleteDely()
+        {
+            yield return new WaitForSeconds(2);
+            onComplete.Invoke();
         }
     }
 }

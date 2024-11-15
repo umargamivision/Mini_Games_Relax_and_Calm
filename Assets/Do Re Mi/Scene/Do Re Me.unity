@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 767968205}
   - component: {fileID: 767968204}
   m_Layer: 0
-  m_Name: Fisnih Point
+  m_Name: End Point
   m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1139,6 +1139,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900930703a25344e38b3da3a1e3e7641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameData:
+    miniGame: 0
+    favouriteIndex: -1
+    currentLevel: 1
+    highScore: 0
+    currentTheme: 0
+    currentCharacter: 0
   mode: 0
   playerController: {fileID: 9152437700050966856}
   modeSelectionPanel: {fileID: 1127811223}
@@ -2205,6 +2212,21 @@ MonoBehaviour:
   onReachFinishPoint:
     m_PersistentCalls:
       m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1223027568}
+        m_TargetAssemblyTypeName: DoReMiMiniGame, Assembly-CSharp
+        m_MethodName: LevelComplete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &9152437700050966857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2217,7 +2239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34436a0cccae4b3cadfded6ac212062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopMic: 0
+  stopMic: 1
   sensitivity: 1000
   loudness: 0
 --- !u!1660057539 &9223372036854775807
@@ -2225,7 +2247,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2096059954}
-  - {fileID: 1056961187}
   - {fileID: 1565655771}
   - {fileID: 562703082}
   - {fileID: 1223027567}
@@ -2236,3 +2257,4 @@ SceneRoots:
   - {fileID: 1583553610}
   - {fileID: 767968207}
   - {fileID: 2015216526}
+  - {fileID: 1056961187}

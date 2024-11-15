@@ -9,9 +9,13 @@ public class DoReMiMiniGame : MiniGameBase
     public Mode mode;
     public PlayerController playerController;
     public GameObject modeSelectionPanel;
+    public override void LevelComplete()
+    {
+        base.LevelComplete();
+    }
     public override void NextLevel()
     {
-        throw new System.NotImplementedException();
+        UIManager.Instance.LoadMiniGameScene("Do Re Me");
     }
     public override void ReplayLevel()
     {

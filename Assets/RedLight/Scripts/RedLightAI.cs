@@ -8,11 +8,11 @@ namespace RedLightMiniGameSpace
 {
     public class RedLightAI : Player
     {
-        public Rigidbody2D rigidbody2D;
+        //public Rigidbody2D rigidbody2D;
         private void Update()
         {
-            if (currentState == State.alive)
-                RBMovement();
+            // if (currentState == State.alive)
+            //     RBMovement();
             if ((finishPoint.position.y - transform.position.y) < 0)
                 Win();
             if (redLightBoss.lightColor == RedLightBoss.LightColor.red && !(currentState == State.die))
@@ -23,7 +23,11 @@ namespace RedLightMiniGameSpace
                 }
             }
         }
-
+        private void FixedUpdate()
+        {
+            if (currentState == State.alive)
+                RBMovement();
+        }
         public void Die()
         {
             currentState = State.die;
@@ -33,7 +37,7 @@ namespace RedLightMiniGameSpace
         {
             currentState = State.win;
             spriteRenderer.color = Color.blue;
-            rigidbody2D.velocity=Vector3.zero;
+            rb2D.velocity = Vector3.zero;
         }
         public Vector2 AIJoyStick()
         {
@@ -55,8 +59,8 @@ namespace RedLightMiniGameSpace
             if (currentState == State.die) return; // Prevent movement if the player is dead
 
             // Move the player based on joystick input
-            Vector2 move = new Vector2(AIJoyStick().x, AIJoyStick().y * speed * Time.deltaTime);
-            rigidbody2D.velocity = move;
+            Vector2 move = new Vector2(AIJoyStick().x, AIJoyStick().y * speed);
+            rb2D.velocity = move;
 
             // Get the player's current position in screen space
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
@@ -69,7 +73,7 @@ namespace RedLightMiniGameSpace
             Vector3 clampedWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
 
             // Set the Rigidbody2D position, clamping only the position
-            rigidbody2D.position = new Vector2(clampedWorldPosition.x, clampedWorldPosition.y);
+            rb2D.position = new Vector2(clampedWorldPosition.x, clampedWorldPosition.y);
         }
         public void Movement()
         {

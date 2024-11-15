@@ -7,7 +7,7 @@ namespace RedLightMiniGameSpace
 {
     public class RedLightPlayer : Player
     {
-        public Rigidbody2D rigidbody2D;
+        //public Rigidbody2D rigidbody2D;
         public Joystick joystick;
         public GameObject[] characters;
         private void Start() 
@@ -21,8 +21,8 @@ namespace RedLightMiniGameSpace
         }
         private void Update()
         {
-            if (currentState == State.alive)
-                RBMovement();
+            // if (currentState == State.alive)
+            //     RBMovement();
             if ((finishPoint.position.y - transform.position.y) < 0 && currentState == State.alive)
                 Win();
             // Check if the light is red and the player is moving, only if they are not already dead
@@ -34,7 +34,11 @@ namespace RedLightMiniGameSpace
                 }
             }
         }
-
+        private void FixedUpdate() 
+        {
+            if (currentState == State.alive)
+                RBMovement();    
+        }
         public void Die()
         {
             currentState = State.die;
@@ -57,8 +61,8 @@ namespace RedLightMiniGameSpace
             if (currentState == State.die) return; // Prevent movement if the player is dead
 
             // Move the player based on joystick input
-            Vector2 move = new Vector2(joystick.Horizontal, joystick.Vertical) * speed * Time.deltaTime;
-            rigidbody2D.velocity = move;
+            Vector2 move = new Vector2(joystick.Horizontal, joystick.Vertical) * speed;
+            rb2D.velocity = move;
 
             // Get the player's current position in screen space
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
@@ -71,7 +75,7 @@ namespace RedLightMiniGameSpace
             Vector3 clampedWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
 
             // Set the Rigidbody2D position, clamping only the position
-            rigidbody2D.position = new Vector2(clampedWorldPosition.x, clampedWorldPosition.y);
+            rb2D.position = new Vector2(clampedWorldPosition.x, clampedWorldPosition.y);
         }
         public void Movement()
         {
@@ -98,11 +102,16 @@ namespace RedLightMiniGameSpace
             currentState = State.alive;
             spriteRenderer.color = Color.white; // Restore original color
         }
+        public override void KillPlayer()
+        {
+            Die();
+        }
     }
     public class Player : MonoBehaviour
     {
         public enum State { die, alive, win }
         public float speed;
+        public Rigidbody2D rb2D;
         public State currentState;
         public SpriteRenderer spriteRenderer;
         public RedLightBoss redLightBoss;
@@ -111,7 +120,7 @@ namespace RedLightMiniGameSpace
         {
 
         }
-        public void KillPlayer()
+        public virtual void KillPlayer()
         {
             print("Player Die");
             Destroy(gameObject);
