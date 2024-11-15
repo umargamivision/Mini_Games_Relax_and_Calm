@@ -43,6 +43,7 @@ public sealed class SaveData
     public int Gems = 0;
     public int GameTutorial = 0;
     public int CurrentGameTutorialStep = 0;
+    public List<MiniGameData> miniGamesData;
 
     [HideInInspector]
     public string HashOfSaveData = null;
@@ -67,6 +68,7 @@ public sealed class SaveData
         Gems = data.Gems;
         GameTutorial = data.GameTutorial;
         CurrentGameTutorialStep = data.CurrentGameTutorialStep;
+        miniGamesData = data.miniGamesData;
    //     CurrentWorldIndex = data.CurrentWorldIndex;
 
     }//CopyConstructor() end

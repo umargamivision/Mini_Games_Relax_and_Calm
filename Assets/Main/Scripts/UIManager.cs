@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Ommy.Prefs;
+using Ommy.SaveData;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,6 +32,13 @@ public class UIManager : MonoBehaviour
     public void Start()
     {
         if(miniGameBase == null) miniGameBase = FindObjectOfType<MiniGameBase>();
+    }
+    public void AddFavourite(bool farourite)
+    {
+        if(farourite)
+            miniGameBase.miniGameData.favouriteIndex = -1;
+        else
+            miniGameBase.miniGameData.favouriteIndex = -1;
     }
     public void NextLevelClick()
     {

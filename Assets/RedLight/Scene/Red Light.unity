@@ -701,6 +701,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a9f3fe5c7849db9de914bf9d28b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameData:
+    miniGame: 0
+    hasFavourite: 0
+    currentLevel: 0
+    highScore: 0
+    currentTheme: 0
+    currentCharacter: 0
   gameTime: 30
   p1: {fileID: 1328232062}
   p2: {fileID: 2123063250}

@@ -11,6 +11,7 @@ namespace DoReMiSpace
         public bool voiceControll;
         public MicroInput microInput;
         public float[] loudnessOfLevels;
+        public bool stoped;
         public bool hasReached;
         public int currentHightLevel;
         public float[] hightLevels;
@@ -22,6 +23,11 @@ namespace DoReMiSpace
         public float gravity;
         public Rigidbody rb;
         public UnityEvent onReachFinishPoint;
+        public void StartGame(bool useVoiceControl)
+        {
+            voiceControll = useVoiceControl;
+            stoped = false;
+        }
         public void Update()
         {
             if (voiceControll)
@@ -62,7 +68,7 @@ namespace DoReMiSpace
         }
         private void FixedUpdate()
         {
-            if (rb.velocity.z < maxSpeed && !hasReached)
+            if (rb.velocity.z < maxSpeed && !hasReached && !stoped)
                 rb.AddForce(Vector3.forward * moveSpeed);
         }
         public void SetHight()
@@ -86,7 +92,6 @@ namespace DoReMiSpace
                     break;
                 }
             }
-
         }
 
         private void OnCollisionEnter(Collision other)
