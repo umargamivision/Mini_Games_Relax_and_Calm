@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class KnifeSliceManager : MonoBehaviour
 {
+    public static KnifeSliceManager instance;
+    public int weightPercentage;
+    public bool win;
     public GameObject knife;
     public Transform targetPosition1; // Target position for the first sliced part
     public Transform targetPosition2; // Target position for the second sliced part
@@ -16,6 +19,11 @@ public class KnifeSliceManager : MonoBehaviour
 
     private bool hasSliced = false;
 
+    private void Start()
+    {
+        instance = this;
+        win = false;
+    }
     // Call this method to perform slicing, e.g., when the knife collides with the object
     public void SliceSprite(GameObject objectToSlice, Vector3 collisionPoint)
     {
@@ -63,7 +71,7 @@ public class KnifeSliceManager : MonoBehaviour
                     // Determine target position and rotation angle for each fragment
                     Transform targetPosition = (fragmentIndex == 0) ? targetPosition1 : targetPosition2;
                     float targetRotation = (fragmentIndex == 0) ? -90f : 90f;
-                    int weightPercentage = (fragmentIndex == 0) ? firstFragmentWeight : secondFragmentWeight;
+                    weightPercentage = (fragmentIndex == 0) ? firstFragmentWeight : secondFragmentWeight;
 
                     if (targetPosition != null)
                     {
@@ -77,6 +85,7 @@ public class KnifeSliceManager : MonoBehaviour
 
                     // Animate the weight display in the corresponding text box
                     Text targetTextBox = (fragmentIndex == 0) ? textBoxForFragment1 : textBoxForFragment2;
+                   
                     StartCoroutine(AnimateText(targetTextBox, weightPercentage));
 
                     fragmentIndex = (fragmentIndex + 1) % 2; // Alternate between target positions
@@ -112,8 +121,17 @@ public class KnifeSliceManager : MonoBehaviour
         fragment.transform.rotation = endRotation; // Ensure final rotation is exact
         Debug.Log("Rotated fragment to " + targetRotation + " degrees.");
     }
-
-    IEnumerator AnimateText(Text targetTextBox, int targetValue)
+    IEnumerator LevelComplete()
+    {
+        yield return new WaitForSeconds(3f);
+        CutInHalf_MiniGame.instance.LevelComplete();
+    }
+    IEnumerator LevelFail()
+    {
+        yield return new WaitForSeconds(3f);
+        UIManager.Instance.ShowLevelFail();
+    }
+   IEnumerator AnimateText(Text targetTextBox, int targetValue)
     {
         int currentValue = 0;
         while (currentValue < targetValue)
@@ -122,6 +140,17 @@ public class KnifeSliceManager : MonoBehaviour
             if (currentValue > targetValue) currentValue = targetValue; // Ensure it doesn’t go over the target value
             targetTextBox.text = currentValue + "%";
             yield return new WaitForSeconds(0.03f); // Control the update speed for a smooth animation effect
+        }
+    }
+    public void CheckLevelCompletetion()
+    {
+        if (win)
+        {
+            StartCoroutine(LevelComplete());
+        }
+        else
+        {
+            StartCoroutine(LevelFail());
         }
     }
 }

@@ -15,5 +15,24 @@ public class KnifeScript : MonoBehaviour
             // Call the SliceSprite function on the KnifeSliceManager, passing in the sliceable object and the collision point
             sliceManager.SliceSprite(collision.gameObject, collisionPoint);
         }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            if (KnifeSliceManager.instance.weightPercentage == 50)
+            {
+                KnifeSliceManager.instance.win = true;
+                int levelno = PlayerPrefs.GetInt("CutInHalf_LevelNo");
+                levelno = levelno + 1;
+                Debug.Log("level no is " + levelno + " AFTER INCREMENT");
+                if (levelno >= 2)
+                {
+                    levelno = 0;
+                }
+                PlayerPrefs.SetInt("CutInHalf_LevelNo", levelno);
+
+            }
+
+          
+            KnifeSliceManager.instance.CheckLevelCompletetion();
+        }
     }
 }
