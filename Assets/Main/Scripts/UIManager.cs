@@ -62,6 +62,12 @@ public class UIManager : MonoBehaviour
         levelFailScreen.SetActive(false);
         sceneLoader.LoadMiniGameScene(miniGameSceneName);
     }
+    public void LoadMiniGameScene(MiniGame miniGame)
+    {
+        levelCompleteScreen.SetActive(false);
+        levelFailScreen.SetActive(false);
+        sceneLoader.LoadMiniGameScene(miniGame.ToString());
+    }
     public void LoadMainMenu()
     {
         sceneLoader.LoadMainMenuScene();

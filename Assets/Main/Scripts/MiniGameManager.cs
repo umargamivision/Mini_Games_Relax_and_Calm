@@ -44,16 +44,19 @@ public abstract class MiniGameBase : MonoBehaviour
     }
     public virtual void MiniGameStart()
     {
+        FetchMiniGameData();
         Application.targetFrameRate = 30;
         Debug.Log("GAME START");
     }
     public virtual void LevelComplete()
     {
+        SaveMiniGameData();
         Debug.Log("GAME COMPLETE");
         UIManager.Instance.ShowLevelComplete();
     }
     public virtual void LevelFail()
     {
+        SaveMiniGameData();
         Debug.Log("GAME FAIL");
         UIManager.Instance.ShowLevelFail();
     }

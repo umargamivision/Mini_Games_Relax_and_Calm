@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7573ce3f65a47eaa6c0b9e4f15c79a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comeFromMainMenu: 0
 --- !u!1 &130370093
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,7 +752,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: scream chicken
+          m_StringArgument: ScreamChicken
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &367579807
@@ -1743,7 +1744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1486281028}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1

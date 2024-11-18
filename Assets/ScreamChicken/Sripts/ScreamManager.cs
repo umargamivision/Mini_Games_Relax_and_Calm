@@ -9,15 +9,20 @@ public class ScreamManager : MiniGameBase
     public GameObject controller;
     public static ScreamManager instance;
     // Start is called before the first frame update
-    void Awake()
+    public void Awake()
     {
         instance = this;
-       int x= PlayerPrefs.GetInt("MainMenuScene");
-        if (x == 1)
+        // int x= PlayerPrefs.GetInt("MainMenuScene");
+        // if (x == 1)
+        // {
+        //     Time.timeScale = 0;
+        //     controller.SetActive(true);
+        //     PlayerPrefs.SetInt("MainMenuScene", 0);
+        // }
+        if(GameManager.Instance.comeFromMainMenu)
         {
             Time.timeScale = 0;
             controller.SetActive(true);
-            PlayerPrefs.SetInt("MainMenuScene", 0);
         }
     }
     public void RestartLevel()
@@ -28,7 +33,9 @@ public class ScreamManager : MiniGameBase
     private IEnumerator RestartSceneAfterDelay()
     {
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.comeFromMainMenu = false;
+        UIManager.Instance.LoadMiniGameScene(MiniGame.ScreamChicken);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public override void NextLevel()

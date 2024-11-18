@@ -23,16 +23,16 @@ public class DoReMiMiniGame : MiniGameBase
     }
     public void TapModeClick()
     {
+        MiniGameStart();
         mode = Mode.Tap;
         modeSelectionPanel.SetActive(false);
         playerController.StartGame(false);
-        MiniGameStart();
     }
     public void VoiceModeClick()
     {
+        MiniGameStart();
         mode = Mode.Voice;
         playerController.StartGame(true);
         modeSelectionPanel.SetActive(false);
-        MiniGameStart();
     }
 }

@@ -31,16 +31,20 @@ public class RedLightMiniGame : MiniGameBase
     public void GameStart()
     {
         MiniGameStart();
-        SetupLevel(GamePreference.RedLightCurrentLevel);
+        //SetupLevel(GamePreference.RedLightCurrentLevel);
+        SetupLevel(miniGameData.currentLevel);
         gameTimerCoroutine = StartCoroutine(GameTimerCountDown(LevelFail));
-        levelNoTxt.text = GamePreference.RedLightCurrentLevel.ToString();
+        //levelNoTxt.text = GamePreference.RedLightCurrentLevel.ToString();
+        levelNoTxt.text = miniGameData.currentLevel.ToString();
         OnGameStart.Invoke();
     }
     public void SetupLevel(int levelNo)
     {
         if (levelNo > levels.Length)
         {
-            GamePreference.RedLightCurrentLevel = 1;
+            //GamePreference.RedLightCurrentLevel = 1;
+            miniGameData.currentLevel = 1;
+            SaveMiniGameData();
             levelNo = 1;
         }
         levels.ToList().ForEach(f => f.SetActive(false));
@@ -58,7 +62,9 @@ public class RedLightMiniGame : MiniGameBase
     public override void LevelComplete()
     {
         base.LevelComplete();
-        GamePreference.RedLightCurrentLevel++;
+        //GamePreference.RedLightCurrentLevel++;
+        miniGameData.currentLevel++;
+        SaveMiniGameData();
     }
     public override void LevelFail()
     {

@@ -34,9 +34,10 @@ public class HamsterJumpMiniGame : MiniGameBase
     }
     public void StartGame()
     {
-        hightScoreTxt.text = GamePreference.HamsterJumpHighScore.ToString();
-        scoreTxt.text = 0.ToString();
+        //hightScoreTxt.text = GamePreference.HamsterJumpHighScore.ToString();
         MiniGameStart();
+        hightScoreTxt.text = miniGameData.highScore.ToString();
+        scoreTxt.text = 0.ToString();
     }
     public void PlayClick()
     {
@@ -45,9 +46,11 @@ public class HamsterJumpMiniGame : MiniGameBase
     public void AddScore(int _score)
     {
         score += _score;
-        if (GamePreference.HamsterJumpHighScore < score)
+        //if (GamePreference.HamsterJumpHighScore < score)
+        if (miniGameData.highScore < score)
         {
-            GamePreference.HamsterJumpHighScore = score;
+            //GamePreference.HamsterJumpHighScore = score;
+            miniGameData.highScore = score;
         }
         scoreTxt.text = score.ToString();
     }
