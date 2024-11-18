@@ -57,7 +57,6 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 05c7216c78d4dd34ebe2bac9c1e274d7, type: 3}
     - {fileID: 2800000, guid: e04e6c970b950d946a782ea08e5f971d, type: 3}
     - {fileID: 2800000, guid: 066d3840badf4d24dba1d42b4c59b888, type: 3}
-    - {fileID: 2800000, guid: 98e8e1cf8dc7dbf469617c2e40c8a944, type: 3}
     - {fileID: 2800000, guid: b3f0d976f6d6802479d6465d11b3aa68, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
@@ -75,7 +74,6 @@ SpriteAtlas:
     - 05c7216c78d4dd34ebe2bac9c1e274d7: 21300000
     - d1546f8db185caf4dafcfa58efa3ba2c: 21300000
     - 5a97d5afa6254804f81b7ba956296996: 21300000
-    - 98e8e1cf8dc7dbf469617c2e40c8a944: 21300000
     - 7f0db3cf23c93fc4eac01cb3a52388ee: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -91,7 +89,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 05c7216c78d4dd34ebe2bac9c1e274d7, type: 3}
   - {fileID: 21300000, guid: d1546f8db185caf4dafcfa58efa3ba2c, type: 3}
   - {fileID: 21300000, guid: 5a97d5afa6254804f81b7ba956296996, type: 3}
-  - {fileID: 21300000, guid: 98e8e1cf8dc7dbf469617c2e40c8a944, type: 3}
   - {fileID: 21300000, guid: 7f0db3cf23c93fc4eac01cb3a52388ee, type: 3}
   m_PackedSpriteNamesToIndex:
   - SlicedBackground
@@ -106,7 +103,6 @@ SpriteAtlas:
   - IconWarning
   - IconCollapse
   - IconInfo
-  - SlicedBackground2
   - IconResizeAllDirections
   m_RenderDataMap: {}
   m_Tag: IngameDebugConsoleSpriteAtlas

@@ -2,18 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RedLightMiniGameSpace;
 using UnityEngine;
 using UnityEngine.Events;
 namespace DoReMiSpace
 {
     public class PlayerController : MonoBehaviour
     {
+        [Serializable]
+        public class levelVoiceInfo
+        {
+            public float minLoudness;
+            public float maxLoudness;
+            public float sensitivity;
+        }
         public bool voiceControll;
         public MicroInput microInput;
-        public float[] loudnessOfLevels;
+        public LevelCreator levelCreator;
+        public levelVoiceInfo[] levelVoiceInfos;
         public bool stoped;
         public bool hasReached;
-        public int currentHightLevel;
+        public int currentLevelHight => levelCreator.currentPlatform.level;
+        public int currentPlayerHight;
         public float[] hightLevels;
         public string obstacleName;
         public float collisionForce;
@@ -33,21 +43,47 @@ namespace DoReMiSpace
         public void Update()
         {
             if (voiceControll)
-                VoiceController();
+                AsistiveVoiceController();
+                //VoiceController();
             else
                 TapController();
         }
         public void VoiceController()
         {
-            for (int i = 0; i < loudnessOfLevels.Length; i++)
+            Debug.LogWarning("current platform hight: "+ currentLevelHight);
+            Debug.LogWarning("current player hight: "+ currentPlayerHight);
+            Debug.LogWarning("current sensitivity: "+ microInput.sensitivity);
+            microInput.sensitivity = levelVoiceInfos[currentLevelHight].sensitivity;
+            for (int i = 0; i < levelVoiceInfos.Length; i++)
             {
-                if(microInput.loudness>loudnessOfLevels[i]) 
+                if(microInput.loudness > levelVoiceInfos[i].minLoudness && microInput.loudness < levelVoiceInfos[i].maxLoudness)
                 {
-                    currentHightLevel = i;
+                    currentPlayerHight = i;
                 }
             }
-            if(microInput.loudness > loudnessOfLevels[0]) SetHight();
+            if(microInput.loudness > 0) SetHight();
             else AddGravity();
+        }
+        public float minimumLoudnessRequire;
+        public void OnSilderChange(Single value)
+        {
+            minimumLoudnessRequire = value;
+        }
+        public void AsistiveVoiceController()
+        {
+            Debug.LogWarning("minimumLoudnessRequire  : "+ minimumLoudnessRequire);
+            //microInput.sensitivity = levelVoiceInfos[currentLevelHight].sensitivity;
+            var clampedL = Mathf.Clamp(microInput.loudness, 0 , 1000);
+            var normalizeLoudness = clampedL/1000;
+            if(normalizeLoudness > minimumLoudnessRequire)
+            {
+                currentPlayerHight = 1+currentLevelHight;
+                SetHight();
+            }
+            else
+            {
+                AddGravity();
+            }
         }
         public void TapController()
         {
@@ -62,10 +98,10 @@ namespace DoReMiSpace
         }
         public void UpdateCurrentLevel()
         {
-            currentHightLevel++;
-            if (currentHightLevel >= hightLevels.Length)
+            currentPlayerHight++;
+            if (currentPlayerHight >= hightLevels.Length)
             {
-                currentHightLevel = hightLevels.Length - 1;
+                currentPlayerHight = hightLevels.Length - 1;
             }
         }
         private void FixedUpdate()
@@ -77,7 +113,7 @@ namespace DoReMiSpace
         {
             if (hasReached) return;
             rb.velocity = new Vector3(0, 0, rb.velocity.z);
-            var HightPoint = new Vector3(rb.position.x, hightLevels[currentHightLevel], rb.position.z);
+            var HightPoint = new Vector3(rb.position.x, hightLevels[currentPlayerHight], rb.position.z);
             rb.position = Vector3.Lerp(rb.position, HightPoint, jumpForce * Time.deltaTime);
         }
         public void AddGravity()
@@ -90,7 +126,7 @@ namespace DoReMiSpace
             {
                 if (rb.position.y <= hightLevels[i])
                 {
-                    currentHightLevel = i;
+                    currentPlayerHight = i;
                     break;
                 }
             }
@@ -109,6 +145,21 @@ namespace DoReMiSpace
                 rb.useGravity = true;
                 rb.drag = 0.5f;
                 onReachFinishPoint.Invoke();
+            }
+            if(other.transform.CompareTag("Finish"))
+            {
+                if(completeDely==null)completeDely=StartCoroutine(GameCompleteDely());
+            }
+        }
+        private void OnTriggerEnter(Collider other) 
+        {
+            if(other.name.Contains("Pass"))
+            {
+                var platform = other.GetComponentInParent<PlatformDoReMe>();
+                if(platform != null)
+                {
+                    platform.OnPlayerPassed();
+                }
             }
             if(other.transform.CompareTag("Finish"))
             {

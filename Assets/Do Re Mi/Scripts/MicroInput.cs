@@ -49,8 +49,8 @@ public class MicroInput : MonoBehaviour
     {
         if (!stopMic)
         {
-            loudness = Mathf.Lerp(loudness, GetMicrophoneLoudness(), loudnessSmoothness*Time.deltaTime);
-            //loudness = GetMicrophoneLoudness() * sensitivity;
+            //loudness = Mathf.Lerp(loudness, GetMicrophoneLoudness(), loudnessSmoothness*Time.deltaTime);
+            loudness = GetMicrophoneLoudness() * sensitivity;
             Debug.Log("Loudness: " + loudness);
         }
         // if (canJump && isGrounded && (loudness > jumpLoudnessThreshold || Input.GetKeyDown(KeyCode.Space)))
@@ -64,7 +64,6 @@ public class MicroInput : MonoBehaviour
     // void FixedUpdate()
     // {
     //     isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, whatIsGround);
-
     //     if (isGrounded)
     //     {
     //         canJump = true;
