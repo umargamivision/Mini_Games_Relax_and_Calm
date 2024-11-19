@@ -10,16 +10,22 @@ namespace PopIt
         public bool canPop;
         public bool hasPoped;
         public Collider2D collider2D;
+        public UnityEvent onReset;
         public UnityEvent onPop;
+        private void OnValidate() 
+        {    
+            //collider2D = GetComponent<Collider2D>();
+        }
         private void OnEnable() 
         {
-            collider2D = GetComponent<Collider2D>();
-            Deactivate();
+            //collider2D = GetComponent<Collider2D>();
+            //Deactivate();
         }
         public void ResetPopable()
         {
             hasPoped = false;
             transform.GetChild(0).gameObject.SetActive(true);
+            onReset.Invoke();
         }
         public void Activate()
         {

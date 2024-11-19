@@ -8,13 +8,14 @@ namespace PopIt
     public class PuzzleBase : MonoBehaviour
     {
         public List<PuzzlePiece> puzzlePieces;
-        public UnityEvent OnComplete;
+        public UnityEvent OnStart, OnComplete;
         public bool hasComplete => HasComplete();
 
         private void OnEnable() 
         {
             puzzlePieces.ForEach(f=>f.OnJoin.AddListener(OnJoinPiece));    
             Setup();
+            OnStart.Invoke();
         }
         private void OnDisable() 
         {
@@ -42,7 +43,8 @@ namespace PopIt
             if(hasComplete)
             {
                 OnComplete.Invoke();
-                puzzlePieces.ForEach(f=>f.GetComponent<Collider2D>().enabled=false);
+                //puzzlePieces.ForEach(f=>f.GetComponent<Collider2D>().enabled=false);
+                puzzlePieces.ForEach(f=>f.gameObject.SetActive(false));
             }
         }
     }

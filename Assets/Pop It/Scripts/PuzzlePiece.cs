@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.Events;
+using JetBrains.Annotations;
 namespace PopIt
 {
     public class PuzzlePiece : MonoBehaviour
@@ -24,6 +25,7 @@ namespace PopIt
         }
         public void Setup()
         {
+            gameObject.SetActive(true);
             hasJoined = false;
             hasPicked = false;
             GetComponent<Collider2D>().enabled=true;
@@ -53,12 +55,15 @@ namespace PopIt
         }
         public void JoinIt()
         {
+            GetComponent<SpriteRenderer>().sortingOrder = 3;
             hasJoined = true;
             transform.DOMove(JoinPoint.position,joinSpeed).SetEase(Ease.Linear);
             OnJoin.Invoke();
         }
+        int defOrder;
         public void OnPick()
         {
+            GetComponent<SpriteRenderer>().sortingOrder = 5;
             hasPicked = true;
             transform.DOScale(normalSize,scaleSpeed).SetEase(Ease.Linear);
         }
