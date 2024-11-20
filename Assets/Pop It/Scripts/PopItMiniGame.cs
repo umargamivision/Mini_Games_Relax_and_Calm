@@ -35,11 +35,11 @@ public class PopItMiniGame : MiniGameBase
     {
         amazing.SetActive(true);
         amazing.transform.localScale = Vector3.zero;
-        amazing.transform.DOScale(1, 0.2f).OnComplete(() =>
+        amazing.transform.DOScale(1, 0.3f).OnComplete(() =>
         {
 
         });
-        StartCoroutine(DelyAction(SetNextLevel, 1));
+        StartCoroutine(DelyAction(SetNextLevel, 2));
     }
     public IEnumerator DelyAction(Action action, float dely)
     {
