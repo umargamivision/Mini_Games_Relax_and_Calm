@@ -4,19 +4,16 @@ using System.Collections.Generic;
 using Ommy.SaveData;
 namespace Ommy.Audio
 {
-
+    public enum BG
+    {
+        mainMenu,
+        gamePlay,
+    }
     public enum SFX
     {
-        Reward,
-        Click,
-        Upgrade, MachineUpgrade,
-        Unlock,
-        BeltUnlock,
-        Spawn,
-        EggDrop,
-        WheatDrop,
-        CornDrop,
-        MilkDrop
+       levelComplete,
+       levelFail,
+       buttonClick,
     }//enum end
 
     [System.Serializable]
@@ -38,7 +35,24 @@ namespace Ommy.Audio
         public AudioClip Clip => _clip;
 
     }//struct end
+    [System.Serializable]
+    public sealed class BGMusic
+    {
+        //===================================================
+        // FIELDS
+        //===================================================
+        [SerializeField] BG _bg;
+        [SerializeField] AudioClip _clip = null;
 
+        // Constructor
+        public BGMusic(BG bG) => _bg = bG;
+
+        //===================================================
+        // PROPERTIES
+        //===================================================
+        public BG bg => _bg;
+        public AudioClip Clip => _clip;
+    }
     public sealed class AudioManager : MonoBehaviour
     {
         public static AudioManager Instance;
@@ -56,7 +70,7 @@ namespace Ommy.Audio
         [SerializeField] AudioSource _bgSource = null;
         [SerializeField] AudioSource _sfxSource = null;
         [Space]
-        [SerializeField] AudioClip _bgMusic = null;
+        [SerializeField] List<BGMusic> _bgMusics = null;
         [Space]
         [SerializeField] List<SFXClip> _sfxClips = new List<SFXClip>();
 
@@ -116,10 +130,7 @@ namespace Ommy.Audio
         {
             if (_bgSource.isPlaying)
                 return;
-
-            _bgSource.clip = _bgMusic;
-            _bgSource.loop = true;
-            _bgSource.Play();
+            PlayBG((BG)0);
         }//StartGame() end
 
         /// <summary>
@@ -130,14 +141,30 @@ namespace Ommy.Audio
         /// <summary>
         /// Call to play specific SFX clip against enum.
         /// </summary>
+        public AudioClip GetSFX(SFX sFX)
+        {
+            return _sfxClips.Find(f=>f.SFX==sFX).Clip;
+        }
         public void PlaySFX(SFX sfx, float volume = 1f) =>
-            _sfxSource.PlayOneShot(_sfxClips[(int)sfx].Clip, volume);
+            _sfxSource.PlayOneShot(GetSFX(sfx), volume);
+            //_sfxSource.PlayOneShot(_sfxClips[(int)sfx].Clip, volume);
 
         /// <summary>
         /// Call to play custom Audio Clip.
         /// </summary>
         public void PlaySFX(AudioClip clip, float volume = 1f) =>
             _sfxSource.PlayOneShot(clip, volume);
+        
 
+        public AudioClip GetMusic(BG bG)
+        {
+            return _bgMusics.Find(f=>f.bg==bG).Clip;
+        }
+        public void PlayBG(BG bG)
+        {
+            _bgSource.loop = true;
+            _bgSource.clip = GetMusic(bG);
+            _bgSource.Play();
+        }
     }//class end
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Ommy.Audio;
 using Unity.Loading;
 using UnityEngine;
 
@@ -10,5 +12,6 @@ public class MainMenuManager : MonoBehaviour
     {
         GameManager.Instance.comeFromMainMenu = true;
         sceneLoader.LoadMiniGameScene(_name);
+        AudioManager.Instance.PlaySFX(SFX.buttonClick);
     }
 }

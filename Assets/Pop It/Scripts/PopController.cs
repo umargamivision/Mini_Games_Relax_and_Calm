@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Ommy.Audio;
 using UnityEngine;
 using UnityEngine.Events;
 namespace PopIt
 {
 public class PopController : MonoBehaviour
 {
+    public AudioClip popClip;
     public List<Popable> popables;
     public UnityEvent onPopAllPopables;
     private void OnEnable() 
@@ -31,6 +33,7 @@ public class PopController : MonoBehaviour
         {
             onPopAllPopables.Invoke();
         }
+        AudioManager.Instance.PlaySFX(popClip);
     }
     public bool HasPopedAll()
     {

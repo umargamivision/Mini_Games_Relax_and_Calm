@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using DoReMiSpace;
+using Ommy.Audio;
 using UnityEngine;
 
 public class PopItMiniGame : MiniGameBase
@@ -14,12 +15,11 @@ public class PopItMiniGame : MiniGameBase
     [Header("Level Complete")]
     public GameObject amazing;
     public ParticleSystem completeParticle;
-
     public int currentLevel;
     public GameObject[] levels;
     private void Start()
     {
-        StartCoroutine(DelyAction(()=>ActiveLevelSelection(false),1));
+        StartCoroutine(DelyAction(() => ActiveLevelSelection(false), 1));
         SetLevel(currentLevel);
     }
     public override void NextLevel()
@@ -39,9 +39,9 @@ public class PopItMiniGame : MiniGameBase
         {
 
         });
-        StartCoroutine(DelyAction(SetNextLevel,1));
+        StartCoroutine(DelyAction(SetNextLevel, 1));
     }
-    public IEnumerator DelyAction(Action action , float dely)
+    public IEnumerator DelyAction(Action action, float dely)
     {
         yield return new WaitForSeconds(dely);
         action.Invoke();
@@ -68,6 +68,11 @@ public class PopItMiniGame : MiniGameBase
         }
         levels[level].SetActive(true);
     }
+    public void SetLevelClick(int level)
+    {
+        SetLevel(level);
+        AudioManager.Instance.PlaySFX(SFX.buttonClick);
+    }
     public void ActiveLevelSelection(bool active)
     {
         if (active)
@@ -78,5 +83,11 @@ public class PopItMiniGame : MiniGameBase
         {
             levelSelectionPanel.transform.DOMoveX(clossPos, 0.5f);
         }
+        AudioManager.Instance.PlaySFX(SFX.buttonClick);
+    }
+
+    public void PlaySFX(AudioClip audioClip)
+    {
+        AudioManager.Instance.PlaySFX(audioClip);
     }
 }

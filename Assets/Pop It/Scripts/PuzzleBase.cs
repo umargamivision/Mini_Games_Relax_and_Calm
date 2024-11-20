@@ -8,7 +8,7 @@ namespace PopIt
     public class PuzzleBase : MonoBehaviour
     {
         public List<PuzzlePiece> puzzlePieces;
-        public UnityEvent OnStart, OnComplete;
+        public UnityEvent OnStart, OnJoin,OnComplete;
         public bool hasComplete => HasComplete();
 
         private void OnEnable() 
@@ -46,6 +46,7 @@ namespace PopIt
                 //puzzlePieces.ForEach(f=>f.GetComponent<Collider2D>().enabled=false);
                 puzzlePieces.ForEach(f=>f.gameObject.SetActive(false));
             }
+            OnJoin.Invoke();
         }
     }
 }
