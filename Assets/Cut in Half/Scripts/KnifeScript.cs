@@ -17,13 +17,13 @@ public class KnifeScript : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Ground"))
         {
-            if (KnifeSliceManager.instance.weightPercentage == 50)
+            if (KnifeSliceManager.instance.weightPercentage <=52 && KnifeSliceManager.instance.weightPercentage >= 48)
             {
                 KnifeSliceManager.instance.win = true;
                 int levelno = PlayerPrefs.GetInt("CutInHalf_LevelNo");
                 levelno = levelno + 1;
                 Debug.Log("level no is " + levelno + " AFTER INCREMENT");
-                if (levelno >= 2)
+                if (levelno >= 11)
                 {
                     levelno = 0;
                 }

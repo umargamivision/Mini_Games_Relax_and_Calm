@@ -9,8 +9,8 @@ public class KnifeSliceManager : MonoBehaviour
     public int weightPercentage;
     public bool win;
     public GameObject knife;
-    public Transform targetPosition1; // Target position for the first sliced part
-    public Transform targetPosition2; // Target position for the second sliced part
+    public Transform targetPosition1; // Target position for the right sliced part
+    public Transform targetPosition2; // Target position for the left sliced part
     public float moveSpeed = 2.0f; // Speed of movement towards target
     public float rotationSpeed = 100.0f; // Speed of rotation once at target
     public Text textBoxForFragment1; // Text box for displaying the weight of the first fragment
@@ -24,7 +24,7 @@ public class KnifeSliceManager : MonoBehaviour
         instance = this;
         win = false;
     }
-    // Call this method to perform slicing, e.g., when the knife collides with the object
+
     public void SliceSprite(GameObject objectToSlice, Vector3 collisionPoint)
     {
         if (hasSliced) return; // Prevent multiple slicing
@@ -48,58 +48,65 @@ public class KnifeSliceManager : MonoBehaviour
         // Perform the slicing operation
         SpriteSlicer2D.SliceAllSprites(collisionPoint, endPoint, true, ref slicedSpriteInfo);
 
-        // Move fragments to target positions, calculate their areas, and display weights
-        int fragmentIndex = 0;
-        int firstFragmentWeight = 0;
-
-        for (int i = 0; i < slicedSpriteInfo.Count; i++)
+        // Ensure we have exactly two fragments
+        if (slicedSpriteInfo.Count == 1 && slicedSpriteInfo[0].ChildObjects.Count == 2)
         {
-            foreach (var fragment in slicedSpriteInfo[i].ChildObjects)
+            var child1 = slicedSpriteInfo[0].ChildObjects[0];
+            var child2 = slicedSpriteInfo[0].ChildObjects[1];
+
+            // Use bounds to determine which fragment is on the right
+            Renderer bounds1 = child1.GetComponent<Renderer>();
+            Renderer bounds2 = child2.GetComponent<Renderer>();
+
+            if (bounds1 == null || bounds2 == null)
             {
-                MeshRenderer fragmentRenderer = fragment.GetComponent<MeshRenderer>();
-                if (fragmentRenderer != null)
-                {
-                    if (fragmentIndex == 0) // Calculate weight only for the first fragment
-                    {
-                        int fragmentArea = Mathf.RoundToInt(fragmentRenderer.bounds.size.x * fragmentRenderer.bounds.size.y);
-                        firstFragmentWeight = Mathf.RoundToInt((float)fragmentArea / originalArea * 100);
-                        Debug.Log("Fragment 1 occupies " + firstFragmentWeight + "% of the original object's area.");
-                    }
-
-                    int secondFragmentWeight = 100 - firstFragmentWeight; // Calculate weight of the second fragment
-
-                    // Determine target position and rotation angle for each fragment
-                    Transform targetPosition = (fragmentIndex == 0) ? targetPosition1 : targetPosition2;
-                    float targetRotation = (fragmentIndex == 0) ? -90f : 90f;
-                    weightPercentage = (fragmentIndex == 0) ? firstFragmentWeight : secondFragmentWeight;
-
-                    if (targetPosition != null)
-                    {
-                        // Start moving the fragment to the target position with rotation
-                        StartCoroutine(MoveAndRotateFragment(fragment, targetPosition.position, targetRotation));
-                    }
-                    else
-                    {
-                        Debug.LogError("Target position not assigned for fragment index: " + fragmentIndex);
-                    }
-
-                    // Animate the weight display in the corresponding text box
-                    Text targetTextBox = (fragmentIndex == 0) ? textBoxForFragment1 : textBoxForFragment2;
-                   
-                    StartCoroutine(AnimateText(targetTextBox, weightPercentage));
-
-                    fragmentIndex = (fragmentIndex + 1) % 2; // Alternate between target positions
-                }
-                else
-                {
-                    Debug.LogWarning("Fragment " + (i + 1) + " does not have a MeshRenderer component.");
-                }
+                Debug.LogError("Sliced fragments are missing Renderer components.");
+                return;
             }
+
+            // Compare bounds to determine right and left fragments
+            GameObject rightFragment = bounds1.bounds.center.x > bounds2.bounds.center.x ? child1 : child2;
+            GameObject leftFragment = rightFragment == child1 ? child2 : child1;
+
+            // Assign target positions and rotations
+            StartCoroutine(MoveAndRotateFragment(rightFragment, targetPosition1.position, -90f));
+            StartCoroutine(MoveAndRotateFragment(leftFragment, targetPosition2.position, 90f));
+
+            // Calculate and display weights for the fragments
+            AssignWeightsAndAnimateText(rightFragment, leftFragment, textBoxForFragment1, textBoxForFragment2, originalArea);
+        }
+        else
+        {
+            Debug.LogError("Slicing failed or resulted in an unexpected number of fragments.");
         }
 
         hasSliced = false; // Reset the slicing flag if needed for future slicing operations
     }
 
+    private void AssignWeightsAndAnimateText(GameObject fragment1, GameObject fragment2, Text textBox1, Text textBox2, int originalArea)
+    {
+        // Calculate the area of the first fragment
+        MeshRenderer renderer1 = fragment1.GetComponent<MeshRenderer>();
+        if (renderer1 != null)
+        {
+            int fragment1Area = Mathf.RoundToInt(renderer1.bounds.size.x * renderer1.bounds.size.y);
+            int fragment1Weight = Mathf.RoundToInt((float)fragment1Area / originalArea * 100);
+
+            // Assign the weight of the first fragment
+            weightPercentage = fragment1Weight;
+
+            // Automatically calculate the weight of the second fragment
+            int fragment2Weight = 100 - fragment1Weight;
+
+            // Animate the weight display for both text boxes
+            StartCoroutine(AnimateText(textBox1, fragment1Weight));
+            StartCoroutine(AnimateText(textBox2, fragment2Weight));
+        }
+        else
+        {
+            Debug.LogWarning("First fragment does not have a MeshRenderer component.");
+        }
+    }
 
     IEnumerator MoveAndRotateFragment(GameObject fragment, Vector3 targetPosition, float targetRotation)
     {
@@ -119,19 +126,22 @@ public class KnifeSliceManager : MonoBehaviour
         }
 
         fragment.transform.rotation = endRotation; // Ensure final rotation is exact
-        Debug.Log("Rotated fragment to " + targetRotation + " degrees.");
+        Debug.Log("Fragment moved and rotated to target position.");
     }
+
     IEnumerator LevelComplete()
     {
         yield return new WaitForSeconds(3f);
         CutInHalf_MiniGame.instance.LevelComplete();
     }
+
     IEnumerator LevelFail()
     {
         yield return new WaitForSeconds(3f);
         UIManager.Instance.ShowLevelFail();
     }
-   IEnumerator AnimateText(Text targetTextBox, int targetValue)
+
+    IEnumerator AnimateText(Text targetTextBox, int targetValue)
     {
         int currentValue = 0;
         while (currentValue < targetValue)
@@ -142,6 +152,7 @@ public class KnifeSliceManager : MonoBehaviour
             yield return new WaitForSeconds(0.03f); // Control the update speed for a smooth animation effect
         }
     }
+
     public void CheckLevelCompletetion()
     {
         if (win)

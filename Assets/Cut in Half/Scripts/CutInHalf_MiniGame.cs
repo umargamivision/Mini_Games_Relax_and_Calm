@@ -14,7 +14,7 @@ public class CutInHalf_MiniGame : MiniGameBase
         int levelno = PlayerPrefs.GetInt("CutInHalf_LevelNo");
         Debug.Log("Level no is " + levelno);
 
-        if (levelno >= 2)
+        if (levelno >= 11)
         {
             levelno = 0;
             PlayerPrefs.SetInt("CutInHalf_LevelNo", 0);
