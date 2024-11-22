@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using Ommy.Audio;
 namespace RedLightMiniGameSpace
 {
     public class BombTrap : RedLightTrap
@@ -11,6 +12,7 @@ namespace RedLightMiniGameSpace
         public float dely;
         public Transform dropPoint;
         public GameObject explosionEffect;
+        public AudioClip blastClip;
 
         private void Start() 
         {
@@ -46,10 +48,9 @@ namespace RedLightMiniGameSpace
             {
                 Instantiate(explosionEffect, transform.position, Quaternion.identity);
             }
+            AudioManager.Instance.PlaySFX(blastClip);
             Destroy(gameObject);
-
             // Destroy bomb after explosion
-            
         }
     }
 }

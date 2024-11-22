@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Ommy.SaveData;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,6 +7,10 @@ using UnityEngine;
 public abstract class MiniGameBase : MonoBehaviour
 {
     public MiniGameData miniGameData;
+    public void Start() 
+    {
+        FetchMiniGameData();    
+    }
     public void SaveMiniGameData()
     {
         var data = SaveData.Instance.miniGamesData.Find(f => f.miniGame == miniGameData.miniGame);
@@ -20,7 +25,9 @@ public abstract class MiniGameBase : MonoBehaviour
     public void FetchMiniGameData()
     {
         SaveSystem.LoadProgress();
-        miniGameData = SaveData.Instance.miniGamesData.Find(f => f.miniGame == miniGameData.miniGame);
+        var mGD = SaveData.Instance.miniGamesData.Find((f => f.miniGame == miniGameData.miniGame));
+        if(mGD!=null)
+            miniGameData = mGD; 
     }
     public void AddFavourite(bool farourite)
     {

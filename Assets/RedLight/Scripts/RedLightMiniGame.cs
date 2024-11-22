@@ -24,10 +24,6 @@ public class RedLightMiniGame : MiniGameBase
     public TMP_Text gameTimerTxt;
     public UnityEvent OnGameStart;
     int currentTimer;
-    public void Start()
-    {
-        //GameStart();
-    }
     public void GameStart()
     {
         MiniGameStart();
@@ -50,7 +46,14 @@ public class RedLightMiniGame : MiniGameBase
         levels.ToList().ForEach(f => f.SetActive(false));
         levels[levelNo - 1].SetActive(true);
     }
-    public void SetupCharacter(int index = 0)
+    public void SetupCharacterClick(int index)
+    {
+        AdsManager.ShowRewardedAd(()=>
+        {
+            SetupCharacter(index);
+        },"RedLightCharacter");
+    }
+    void SetupCharacter(int index = 0)
     {
         (p1 as RedLightPlayer).SetCharacter(index);
         GameStart();

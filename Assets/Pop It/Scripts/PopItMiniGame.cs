@@ -90,4 +90,13 @@ public class PopItMiniGame : MiniGameBase
     {
         AudioManager.Instance.PlaySFX(audioClip);
     }
+    public void SetLevelClickAd(int level)
+    {
+        AdsManager.ShowRewardedAd(()=>{
+            SetLevelClick(level);
+        }, "PopItLevelUnlock");
+        //AdController.instance.ShowAd(AdController.AdType.INTERSTITIAL, "PopItLevelUnlock");
+        // i want to call this line after success
+        //SetLevelClick(level);
+    }
 }

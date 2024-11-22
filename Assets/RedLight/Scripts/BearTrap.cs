@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Ommy.Audio;
 namespace RedLightMiniGameSpace
 {
     public class BearTrap : RedLightTrap
     {
         public float trapTime;
+        public AudioClip trapClip;
         public override void TriggerTrap(Player player)
         {
             this.player = player;
@@ -19,6 +21,7 @@ namespace RedLightMiniGameSpace
             player.transform.DOMove(transform.position,0.5f);
             yield return new WaitForSeconds(trapTime);
             player.speed = tempSpeed;
+            AudioManager.Instance.PlaySFX(trapClip);
         }
         private void OnTriggerEnter2D(Collider2D other) 
         {

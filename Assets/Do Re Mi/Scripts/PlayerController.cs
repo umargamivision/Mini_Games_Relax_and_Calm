@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using RedLightMiniGameSpace;
 using UnityEngine;
 using UnityEngine.Events;
@@ -148,6 +149,7 @@ namespace DoReMiSpace
             }
             if(other.transform.CompareTag("Finish"))
             {
+                DoubleJump();
                 if(completeDely==null)completeDely=StartCoroutine(GameCompleteDely());
             }
         }
@@ -163,13 +165,23 @@ namespace DoReMiSpace
             }
             if(other.transform.CompareTag("Finish"))
             {
-                if(completeDely==null)completeDely=StartCoroutine(GameCompleteDely());
+                DoubleJump();
+                //if(completeDely==null)completeDely=StartCoroutine(GameCompleteDely());
             }
+        }
+        public void DoubleJump()
+        {
+            rb.isKinematic=false;
+            rb.useGravity = true;
+            //rb.AddForce(Vector3.down*10, ForceMode.Impulse);
+            enabled = false;
+            //rb.DOJump(transform.position, 10, 1,1);
+            //enabled = false;
         }
         public Coroutine completeDely;
         public IEnumerator GameCompleteDely()
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(3);
             onComplete.Invoke();
         }
     }

@@ -2032,6 +2032,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cebf03ff58ef45043a338baa33584428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameData:
+    miniGame: 5
+    favouriteIndex: -1
+    currentLevel: 1
+    highScore: 0
+    currentTheme: 0
+    currentCharacter: 0
   controller: {fileID: 1340839032}
 --- !u!1 &833216836
 GameObject:

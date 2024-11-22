@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Ommy.Audio;
 using RedLightMiniGameSpace;
 using UnityEngine;
 namespace RedLightMiniGameSpace
@@ -8,11 +9,12 @@ namespace RedLightMiniGameSpace
     public class BananaPeelTrap : RedLightTrap
     {
         public float trapTime;
-
+        public AudioClip trapClip;
         public override void TriggerTrap(Player _player)
         {
             player = _player;
             StartCoroutine(ApplyTrap());
+            AudioManager.Instance.PlaySFX(trapClip);
         }
          public IEnumerator ApplyTrap()
         {

@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 264950721}
   - component: {fileID: 264950720}
   m_Layer: 0
-  m_Name: Fisnih Point (2)
+  m_Name: bounce
   m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -421,11 +421,12 @@ Transform:
   m_GameObject: {fileID: 264950718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3165, z: -1.0011642}
-  m_LocalScale: {x: 1, y: 0.054337, z: 1}
+  m_LocalPosition: {x: 0, y: -9.683765, z: 268.59998}
+  m_LocalScale: {x: 39.166374, y: 8.220727, z: 11.386753}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 767968207}
+  m_Children:
+  - {fileID: 2015216526}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &264950720
 BoxCollider:
@@ -917,9 +918,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 38.2, z: 280}
   m_LocalScale: {x: 39.166374, y: 151.29152, z: 11.386753}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2015216526}
-  - {fileID: 264950719}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &873887894
@@ -1579,7 +1578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniGameData:
-    miniGame: 0
+    miniGame: 1
     favouriteIndex: -1
     currentLevel: 1
     highScore: 0
@@ -1880,7 +1879,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
 --- !u!114 &1565655769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2135,11 +2134,11 @@ Transform:
   m_GameObject: {fileID: 2015216522}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3097, z: -1.0011642}
-  m_LocalScale: {x: 1, y: 0.054337, z: 1}
+  m_LocalPosition: {x: 0, y: 0.12514487, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 767968207}
+  m_Father: {fileID: 264950719}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2037202329
 GameObject:
@@ -2746,4 +2745,5 @@ SceneRoots:
   - {fileID: 4752916629921722745}
   - {fileID: 1583553610}
   - {fileID: 767968207}
+  - {fileID: 264950719}
   - {fileID: 1056961187}

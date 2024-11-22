@@ -43,7 +43,7 @@ public sealed class SaveData
     public int Gems = 0;
     public int GameTutorial = 0;
     public int CurrentGameTutorialStep = 0;
-    public List<MiniGameData> miniGamesData;
+    public List<MiniGameData> miniGamesData = new List<MiniGameData>();
 
     [HideInInspector]
     public string HashOfSaveData = null;

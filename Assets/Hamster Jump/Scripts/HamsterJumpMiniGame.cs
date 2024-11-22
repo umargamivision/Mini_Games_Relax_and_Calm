@@ -71,9 +71,24 @@ public class HamsterJumpMiniGame : MiniGameBase
     {
         throw new System.NotImplementedException();
     }
-
     public override void ReplayLevel()
     {
         UIManager.Instance.LoadMiniGameScene("Hamster Jump");
+    }
+    public SpriteRenderer playerSprite;
+    public Sprite[] characters;
+    public void SetCharacter(int index)
+    {
+        playerSprite.sprite = characters[index];
+    }
+    public void SetCharacterAd(int index)
+    {
+        AdsManager.ShowRewardedAd(()=>
+        {
+            SetCharacter(index);
+        }, "HamsterCharacter");
+        //AdController.instance.ShowAd(AdController.AdType.INTERSTITIAL, "PopItLevelUnlock");
+        // i want to call this line after success
+        //SetLevelClick(level);
     }
 }

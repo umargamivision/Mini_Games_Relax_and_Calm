@@ -11,6 +11,11 @@ public class PlatformDoReMe : MonoBehaviour
     public void OnPlayerPassed()
     {
         onPlayerPassed.Invoke();
+        Invoke(nameof(SetActiveDely),2);
+        //gameObject.SetActive(false);
+    }
+    void SetActiveDely()
+    {
         gameObject.SetActive(false);
     }
 }

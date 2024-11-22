@@ -534,6 +534,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 589f9e92061b18941abee48d8255ffa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameData:
+    miniGame: 4
+    favouriteIndex: -1
+    currentLevel: 1
+    highScore: 0
+    currentTheme: 0
+    currentCharacter: 0
   levelObjects:
   - {fileID: 6454584188728127633, guid: 5e6a4937c686f2a4e83964afe4a940fc, type: 3}
   - {fileID: 3591048851006635144, guid: 239473b4470694842a70092811266f68, type: 3}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Ommy.Audio;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class RedLightBoss : MonoBehaviour
     public LightColor lightColor;
     public int redLightTime=2,yellowLightTime=2,greenLightTime=4;
     public TMP_Text redLightTimerTxt;
+    public AudioClip redClip, greenClip;
     public List<GameObject> redLightObjects;
     public List<GameObject> yellowLightObjects;
     public List<GameObject> greenLightObjects;
@@ -49,6 +51,7 @@ public class RedLightBoss : MonoBehaviour
             RedLight();
             yield return new WaitForSeconds(redLightTime);
             GreenLight();
+            AudioManager.Instance.PlaySFX(greenClip);
         }
     }
     void ActivateObject(LightColor lightColor, bool active)
@@ -73,6 +76,7 @@ public class RedLightBoss : MonoBehaviour
         ActivateObject(LightColor.green,false);
         ActivateObject(LightColor.yellow,false);
         ActivateObject(LightColor.red,true);
+        AudioManager.Instance.PlaySFX(redClip);
     }
     public void YellowLight()
     {

@@ -3,11 +3,13 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Ommy.Audio;
 namespace RedLightMiniGameSpace
 {
     public class RedLightPlayer : Player
     {
         //public Rigidbody2D rigidbody2D;
+        public GameObject sheild;
         public Joystick joystick;
         public GameObject[] characters;
         private void Start() 
@@ -31,7 +33,7 @@ namespace RedLightMiniGameSpace
             {
                 if (new Vector2(joystick.Horizontal, joystick.Vertical).magnitude > 0)
                 {
-                    Die();
+                    KillPlayer();
                 }
             }
         }
@@ -107,7 +109,26 @@ namespace RedLightMiniGameSpace
         }
         public override void KillPlayer()
         {
+            if(sheild.activeInHierarchy) return;
             Die();
+            AudioManager.Instance.PlaySFX(deathClip);
+        }
+        public void ApplySheildClick()
+        {
+            AdsManager.ShowRewardedAd(()=>
+            {
+                ApplySheild();
+            }, "RedLight Sheild");
+        }
+        void ApplySheild()
+        {
+            StartCoroutine(ApplySheildDely());
+        }
+        IEnumerator ApplySheildDely()
+        {
+            sheild.SetActive(true);
+            yield return new WaitForSeconds(3);
+            sheild.SetActive(false);
         }
     }
     public class Player : MonoBehaviour
@@ -119,6 +140,7 @@ namespace RedLightMiniGameSpace
         public SpriteRenderer spriteRenderer;
         public RedLightBoss redLightBoss;
         public Transform finishPoint;
+        public AudioClip deathClip;
         public void ApplyTrap()
         {
 

@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+using Ommy.Audio;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +11,8 @@ public class HamsterPlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Collider2D coll2D;
     public PhysicsMaterial2D bouncePM, frictionlessPM;
+    [Header("Audio")]
+    public AudioClip jumpClip, collideClip, addScoreClip;
     public UnityEvent<int> onAddScore;
     public UnityEvent onFail;
     private void Start() 
@@ -26,6 +30,7 @@ public class HamsterPlayerController : MonoBehaviour
         else
             rb.AddForce(new Vector2(-jumpDirection.x, jumpDirection.y) * jumpForce * Time.deltaTime, ForceMode2D.Impulse);
         //rb.AddForce((Vector2.up + Vector2.left) * jumpForce);
+        AudioManager.Instance.PlaySFX(jumpClip);
     }
     public void ScreenClamp()
     {
@@ -99,6 +104,7 @@ public class HamsterPlayerController : MonoBehaviour
         if (other.transform.name.Contains("Platform"))
         {
             OnFail();
+            AudioManager.Instance.PlaySFX(collideClip);
         }
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -107,6 +113,7 @@ public class HamsterPlayerController : MonoBehaviour
         {
             other.enabled=false;
             onAddScore.Invoke(1);
+            AudioManager.Instance.PlaySFX(addScoreClip);
         }
     }
     public void OnFail()
