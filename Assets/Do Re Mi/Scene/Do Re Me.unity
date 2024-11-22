@@ -1995,14 +1995,137 @@ MonoBehaviour:
   platforms: []
   tilePrefabs:
   - {fileID: 5617923952824735120, guid: fc8fbf49112774aef991eec20466d430, type: 3}
-  - {fileID: 5617923952824735120, guid: c179037ea8f994f29ba90f2c55d90561, type: 3}
-  - {fileID: 5617923952824735120, guid: 109a66edc1fb34b91873b2baf08a599a, type: 3}
-  - {fileID: 5617923952824735120, guid: d3a44ca3d4ece498e9f9ac60349957f6, type: 3}
-  - {fileID: 5617923952824735120, guid: c98cabb8f208f4774a3e18b9448b0faa, type: 3}
-  - {fileID: 5617923952824735120, guid: ad712bffb35ec47c09204708b7cc106a, type: 3}
   startPoint: {x: 0, y: 7.5, z: 0}
   numberOfTiles: 6
   distanceBetweenTiles: 50
+--- !u!1 &1645755152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1645755154}
+  - component: {fileID: 1645755153}
+  m_Layer: 0
+  m_Name: Do Re Mi Sound System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1645755153
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645755152}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300016, guid: 0bd320fc789914529a265ab446234cda, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1645755154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645755152}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.5470695, y: -0.4526058, z: -1.71761}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857314628
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,7 +2559,7 @@ Transform:
   m_GameObject: {fileID: 1378922297974783131}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.6, z: 0}
+  m_LocalPosition: {x: 0, y: -2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 18.73}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2691,11 +2814,20 @@ MonoBehaviour:
   - 32.8
   obstacleName: cube
   collisionForce: 30
-  jumpForce: 5
+  jumpForce: 4.5
   moveSpeed: 34.5
   maxSpeed: 30
-  gravity: -30
+  gravity: -20
   rb: {fileID: 9152437700050966855}
+  soundSource: {fileID: 1645755153}
+  audioClips:
+  - {fileID: 8300000, guid: 4894ba59d60d3a942972b6e81a277490, type: 3}
+  - {fileID: 8300000, guid: 93d6dc05c51932d4285b0866c73d2208, type: 3}
+  - {fileID: 8300000, guid: f0c3cd036f99d064bae18193034effb5, type: 3}
+  - {fileID: 8300000, guid: 7945099725a3f3c4d8af5dd6de2365cd, type: 3}
+  - {fileID: 8300000, guid: 54a34f06e6ec6d94c90e1e5884c7a4b8, type: 3}
+  - {fileID: 8300000, guid: a5ae5f599bdfa9346a38e15f6bab0152, type: 3}
+  - {fileID: 8300000, guid: 7a46378439d72444c8ce60cea23b2c4e, type: 3}
   onReachFinishPoint:
     m_PersistentCalls:
       m_Calls: []
@@ -2747,3 +2879,4 @@ SceneRoots:
   - {fileID: 767968207}
   - {fileID: 264950719}
   - {fileID: 1056961187}
+  - {fileID: 1645755154}

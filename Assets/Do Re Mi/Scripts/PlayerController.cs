@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using RedLightMiniGameSpace;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 namespace DoReMiSpace
@@ -33,6 +34,9 @@ namespace DoReMiSpace
         public float maxSpeed;
         public float gravity;
         public Rigidbody rb;
+        [Header("Sounds")]
+        public AudioSource soundSource;
+        public List<AudioClip> audioClips;
         public UnityEvent onReachFinishPoint;
         public UnityEvent onComplete;
         public void StartGame(bool useVoiceControl)
@@ -40,6 +44,12 @@ namespace DoReMiSpace
             if(useVoiceControl)microInput.SetupMic();
             voiceControll = useVoiceControl;
             stoped = false;
+        }
+        public void PlaySound()
+        {
+            soundSource.volume = 1;
+            soundSource.clip = audioClips[currentPlayerHight-1];
+            soundSource.Play();
         }
         public void Update()
         {
@@ -91,11 +101,15 @@ namespace DoReMiSpace
             if (Input.GetMouseButtonDown(0))
             {
                 UpdateCurrentLevel();
+                PlaySound();
             }
             if (Input.GetMouseButton(0))
                 SetHight();
             else
+            {
                 AddGravity();
+                soundSource.volume = math.lerp(soundSource.volume,0,0.1f);
+            }
         }
         public void UpdateCurrentLevel()
         {
