@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 using Ommy.SaveData;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class MiniGameBase : MonoBehaviour
 {
+    public CaptureScreen captureScreen;
     public MiniGameData miniGameData;
     public void Start() 
     {

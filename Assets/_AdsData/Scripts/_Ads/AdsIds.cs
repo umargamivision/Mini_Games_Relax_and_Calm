@@ -7,7 +7,7 @@ public static class AdsIds
     public static string SDKKey()
     {
         #if UNITY_ANDROID
-            return "123456789";
+            return "s90vB_GVsogaitBwLT4ElPmJlKyU4nDE66VpnqAMpedSlT-1FcWhprZ6IHZo8ihE852wKJ1JASbcVec1x7SdWy";
         #elif UNITY_IOS
             return "";
         #else
@@ -17,7 +17,7 @@ public static class AdsIds
     public static string InterstitialAdUnitId()
     {
         #if UNITY_ANDROID
-            return "asdfasdfadsfasdfads";
+            return "639114d2d33dd6d8";
         #elif UNITY_IOS
             return "";
         #else
@@ -27,7 +27,7 @@ public static class AdsIds
     public static string RewardedAdUnitId()
     {
         #if UNITY_ANDROID
-            return "adsfasdfasdfasdfasd";
+            return "3c37272962ce01dd";
         #elif UNITY_IOS
             return "";
         #else
@@ -37,7 +37,7 @@ public static class AdsIds
     public static string BannerAdUnitId()
     {
         #if UNITY_ANDROID
-            return "adsfasdfasdfasdfasdf";
+            return "986d1442d8b7955b";
         #elif UNITY_IOS
             return "";
         #else
@@ -47,7 +47,7 @@ public static class AdsIds
     public static string MRECBannerAdUnitId()
     {
         #if UNITY_ANDROID
-            return "asdfasdfasdfasdfadsf";
+            return "0f0ef31377ffd48b";
         #elif UNITY_IOS
             return "";
         #else
@@ -70,7 +70,7 @@ public static class AdsIds
     public static string AppOpenAdUnitId_MAX()
     {
         #if UNITY_ANDROID
-            return "adsfadfasdfasdfasdfas";
+            return "287becdeb34cbd66";
         #elif UNITY_IOS
             return "";
         #else

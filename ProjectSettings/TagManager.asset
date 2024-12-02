@@ -11,6 +11,7 @@ TagManager:
   - Level3
   - Level4
   - Level5
+  - UI
   layers:
   - Default
   - TransparentFX
@@ -47,4 +48,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer 1
+    uniqueID: 1771567665
+    locked: 0
+  - name: New Layer 2
+    uniqueID: 820767609
     locked: 0

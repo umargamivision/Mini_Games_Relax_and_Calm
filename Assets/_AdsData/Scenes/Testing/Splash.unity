@@ -598,6 +598,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3132916860487436979, guid: ccb65adc845e845748ae66b824c6f16f, type: 3}
+      propertyPath: tenjinKey
+      value: 'QNTE2MWSYFYTWXW5ASAUWYYWVGXPUYO4 '
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

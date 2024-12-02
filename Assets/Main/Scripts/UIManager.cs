@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Ommy.Prefs;
 using Ommy.SaveData;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,11 +10,13 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public MiniGameBase miniGameBase;
+    public CaptureScreen captureScreen;
     public SceneLoader sceneLoader;
     public GameObject levelCompleteScreen;
     public GameObject levelFailScreen;
     public GameObject loadingScreen;
     public GameObject settingScreen;
+    public Canvas camCanvas;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class UIManager : MonoBehaviour
     public void Start()
     {
         if(miniGameBase == null) miniGameBase = FindObjectOfType<MiniGameBase>();
+        if(camCanvas.worldCamera==null) camCanvas.worldCamera = Camera.main;
     }
     public void AddFavourite(bool farourite)
     {
@@ -50,6 +52,7 @@ public class UIManager : MonoBehaviour
     }
     public void ShowLevelComplete()
     {
+        captureScreen.CaptureMoment();
         levelCompleteScreen.SetActive(true);
     }
     public void ShowLevelFail()
@@ -74,7 +77,8 @@ public class UIManager : MonoBehaviour
     }
     public void SettingClick()
     {
-        settingScreen.SetActive(true);
+        sceneLoader.LoadSettingScene();
+        //settingScreen.SetActive(true);
     }
     public void ResetPanels()
     {
@@ -82,5 +86,9 @@ public class UIManager : MonoBehaviour
         levelFailScreen.SetActive(false);
         loadingScreen.SetActive(false);
         settingScreen.SetActive(false);
+    }
+    public void CameraSetActive(bool active)
+    {
+        
     }
 }

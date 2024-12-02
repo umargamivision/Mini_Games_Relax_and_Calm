@@ -58,6 +58,7 @@ namespace PopIt
             GetComponent<SpriteRenderer>().sortingOrder = 3;
             hasJoined = true;
             transform.DOMove(JoinPoint.position,joinSpeed).SetEase(Ease.Linear);
+            GetComponent<Collider2D>().enabled=false;
             OnJoin.Invoke();
         }
         int defOrder;

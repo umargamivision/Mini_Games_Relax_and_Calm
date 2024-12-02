@@ -6,15 +6,13 @@ using UnityEngine.SceneManagement;
 public class ScreamManager : MiniGameBase
 {
     public GameObject controller; // UI Controller for pausing the game
-    public static ScreamManager instance; // Singleton instance
-    public GameObject levelsParent; // Parent GameObject for level prefabs
-    public GameObject level1Prefab; // Prefab for level 1
-    public GameObject level2Prefab; 
-    public GameObject level3Prefab; 
-    public GameObject level4Prefab; 
+    public static ScreamManager instance;
+    public GameObject[] levels;
 
     void Start()
     {
+        base.Start();
+        MiniGameStart();
         instance = this;
 
         // Check if returning from MainMenuScene and pause the game
@@ -25,49 +23,37 @@ public class ScreamManager : MiniGameBase
             controller.SetActive(true);
             PlayerPrefs.SetInt("MainMenuScene", 0);
         }
-
-        // Load the saved level or default to level 1
-        int currentLevel = PlayerPrefs.GetInt("ScreamChicken_Level", 1);
-        Debug.Log("The current level is " + currentLevel);
-        LoadLevel(currentLevel);
+        ActivateLevel(miniGameData.currentLevel);
     }
-
-    public void LoadLevel(int level)
+    public void ActivateLevel(int index)
     {
-        // Clear any existing levels under levelsParent
-        foreach (Transform child in levelsParent.transform)
+        foreach (var item in levels)
         {
-            Destroy(child.gameObject);
+            item.SetActive(false);
         }
-
-        // Instantiate the appropriate level prefab
-        GameObject levelPrefab = null;
-        switch (level)
-        {
-            case 1:
-                levelPrefab = level1Prefab;
-                break;
-            case 2:
-                levelPrefab = level2Prefab;
-                break;
-            case 3:
-                levelPrefab = level3Prefab;
-                break;
-            case 4:
-                levelPrefab = level4Prefab;
-                break;
-           
-            default:
-                Debug.LogError("Invalid level: " + level);
-                return;
-        }
-
-        if (levelPrefab != null)
-        {
-            Instantiate(levelPrefab, levelsParent.transform);
-        }
+        levels[index].SetActive(true);
     }
-
+    public void OnLevelComplete()
+    {
+        miniGameData.currentLevel++;
+        if(miniGameData.currentLevel>=5)
+        {
+            miniGameData.currentLevel=0;
+        }
+        Invoke(nameof(LevelComplete),1);
+    }
+    public void OnLevelFail()
+    {
+        Invoke(nameof(LevelFail),1);
+    }
+    public override void LevelFail()
+    {
+        base.LevelFail();
+    }
+    public override void LevelComplete()
+    {
+        base.LevelComplete();
+    }
     public void RestartLevel()
     {
         StartCoroutine(RestartSceneAfterDelay());

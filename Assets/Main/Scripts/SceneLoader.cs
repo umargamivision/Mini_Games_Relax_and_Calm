@@ -14,6 +14,11 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine(LoadSceneAsync(mainMenuScene));
     }
+    public void LoadSettingScene()
+    {
+        if(SceneManager.GetSceneByName("Setting").isLoaded) return;
+        var v =SceneManager.LoadSceneAsync("Setting",LoadSceneMode.Additive);
+    }
     private IEnumerator LoadSceneAsync(string sceneName)
     {
         loadingScreen.SetActive(true); 

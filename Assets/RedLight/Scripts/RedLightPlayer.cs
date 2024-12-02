@@ -12,13 +12,13 @@ namespace RedLightMiniGameSpace
         public GameObject sheild;
         public Joystick joystick;
         public GameObject[] characters;
-        private void Start() 
+        private void Start()
         {
             SetCharacter();
         }
-        public void SetCharacter(int index=0)
+        public void SetCharacter(int index = 0)
         {
-            characters.ToList().ForEach(f=>f.SetActive(false));
+            characters.ToList().ForEach(f => f.SetActive(false));
             characters[index].SetActive(true);
             spriteRenderer = characters[index].GetComponent<SpriteRenderer>();
         }
@@ -37,12 +37,40 @@ namespace RedLightMiniGameSpace
                 }
             }
         }
-        private void FixedUpdate() 
+        private void FixedUpdate()
         {
             if (currentState == State.alive)
-                RBMovement();    
+            {
+                RBMovement();
+                UpdateAnimation();
+            }
             else
-                rb2D.velocity=Vector3.zero;
+            {
+                rb2D.velocity = Vector3.zero;
+            }
+        }
+        public void UpdateAnimation()
+        {
+            if (joystick.Horizontal > 0 && MathF.Abs(joystick.Vertical) < 0.5f)
+            {
+                animator.Play("Rwalk");
+            }
+            else if (joystick.Horizontal < 0 && MathF.Abs(joystick.Vertical) < 0.5f)
+            {
+                animator.Play("Lwalk");
+            }
+            else if (joystick.Vertical > 0)
+            {
+                animator.Play("Fwalk");
+            }
+            else if (joystick.Vertical < 0)
+            {
+                animator.Play("Bwalk");
+            }
+            else
+            {
+                animator.Play("Idle");
+            }
         }
         public void Die()
         {
@@ -109,13 +137,13 @@ namespace RedLightMiniGameSpace
         }
         public override void KillPlayer()
         {
-            if(sheild.activeInHierarchy) return;
+            if (sheild.activeInHierarchy) return;
             Die();
             AudioManager.Instance.PlaySFX(deathClip);
         }
         public void ApplySheildClick()
         {
-            AdsManager.ShowRewardedAd(()=>
+            AdsManager.ShowRewardedAd(() =>
             {
                 ApplySheild();
             }, "RedLight Sheild");
@@ -134,6 +162,7 @@ namespace RedLightMiniGameSpace
     public class Player : MonoBehaviour
     {
         public enum State { die, alive, win }
+        public Animator animator;
         public float speed;
         public Rigidbody2D rb2D;
         public State currentState;

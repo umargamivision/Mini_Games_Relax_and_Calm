@@ -7,6 +7,7 @@ namespace PopIt
 {
     public class Popable : MonoBehaviour
     {
+        public Sprite parent,child;
         public bool canPop;
         public bool hasPoped;
         public Collider2D collider2D;
@@ -14,6 +15,8 @@ namespace PopIt
         public UnityEvent onPop;
         private void OnValidate() 
         {    
+            GetComponent<SpriteRenderer>().sprite = parent;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = child;
             //collider2D = GetComponent<Collider2D>();
         }
         private void OnEnable() 

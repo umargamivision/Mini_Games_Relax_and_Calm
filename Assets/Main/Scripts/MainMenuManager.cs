@@ -14,4 +14,8 @@ public class MainMenuManager : MonoBehaviour
         sceneLoader.LoadMiniGameScene(_name);
         AudioManager.Instance.PlaySFX(SFX.buttonClick);
     }
+    public void SettingClick()
+    {
+        sceneLoader.LoadSettingScene();
+    }
 }

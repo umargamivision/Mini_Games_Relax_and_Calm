@@ -123,30 +123,6 @@ public class ChickenControllerVoice : MonoBehaviour
 
             // StartCoroutine(RestartSceneAfterDelay());
         }
-        if (collision.gameObject.CompareTag("Level1"))
-        {
-            Debug.Log("Level complete triggered - Restarting scene");
-            PlayerPrefs.SetInt("ScreamChicken_Level", 2);
-            ScreamManager.instance.LevelComplete();
-        }
-        if (collision.gameObject.CompareTag("Level2"))
-        {
-            Debug.Log("Level complete triggered - Restarting scene");
-            PlayerPrefs.SetInt("ScreamChicken_Level", 3);
-            ScreamManager.instance.LevelComplete();
-        }
-        if (collision.gameObject.CompareTag("Level3"))
-        {
-            Debug.Log("Level complete triggered - Restarting scene");
-            PlayerPrefs.SetInt("ScreamChicken_Level", 4);
-            ScreamManager.instance.LevelComplete();
-        }
-        if (collision.gameObject.CompareTag("Level4"))
-        {
-            Debug.Log("Level complete triggered - Restarting scene");
-            PlayerPrefs.SetInt("ScreamChicken_Level", 5);
-            ScreamManager.instance.LevelComplete();
-        }
     }
   
     private void OnCollisionExit2D(Collision2D collision)

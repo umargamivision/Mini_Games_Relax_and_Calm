@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4445917370194174859, guid: d554181aea60443009307e7b5ed39f39, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1834357728}
     - target: {fileID: 6064178574301440770, guid: d554181aea60443009307e7b5ed39f39, type: 3}
       propertyPath: m_Name
       value: Game Progression
@@ -1094,6 +1098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 589f9e92061b18941abee48d8255ffa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  captureScreen: {fileID: 0}
   miniGameData:
     miniGame: 4
     favouriteIndex: -1
@@ -4270,7 +4275,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
 --- !u!114 &2142740879
 MonoBehaviour:
   m_ObjectHideFlags: 0
